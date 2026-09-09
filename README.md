@@ -25,7 +25,10 @@ For local development:
 
 # Setting Up
 - SSH to the Linux server
-- Use Git Clone to clone this repo
+- Use Git Clone to clone this repo:
+```
+git clone https://github.com/connect2sazad/task-management-api-nodejs
+```
 - Then run the below commands:
 ```
 cd task-management-api-nodejs
