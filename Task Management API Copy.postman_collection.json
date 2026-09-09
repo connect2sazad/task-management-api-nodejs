@@ -1,0 +1,106 @@
+{
+  "info": {
+    "_postman_id": "ac354766-5891-4803-b8f9-84573296ae88",
+    "name": "Task Management API Copy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "36203098"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();\r\nconst jwt = body.token.token;\r\n\r\nconsole.log('JWT parts:', jwt.split('.').length);\r\n\r\npm.collectionVariables.set('access_token_tmapi', jwt);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"userid\": \"tester\",\r\n    \"password\": \"Pass@123789\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:3333/api/v1/login",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "3333",
+          "path": [
+            "api",
+            "v1",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Tasks",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Testing the new Base Controller\",\r\n    \"description\": \"This is a test create request for Base Controller\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:3333/api/v1/tasks",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "3333",
+          "path": [
+            "api",
+            "v1",
+            "tasks"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token_tmapiserver}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "access_token_tmapiserver",
+      "value": ""
+    }
+  ]
+}

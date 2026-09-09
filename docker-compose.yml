@@ -1,0 +1,41 @@
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: task-management-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: task_mgmt
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d task_mgmt"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-management-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_PASSWORD: root
+
+volumes:
+  postgres_data:
+      
